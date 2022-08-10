@@ -115,11 +115,64 @@ pip install python-openstackclient -c https://releases.openstack.org/constraints
 ```
 
 
+## download images
+```
+$ wget https://download.fedoraproject.org/pub/alt/atomic/stable/Fedora-Atomic-27-20180419.0/CloudImages/x86_64/images/Fedora-Atomic-27-20180419.0.x86_64.qcow2
 
+## create image
+$ openstack image create \
+                      --disk-format=qcow2 \
+                      --container-format=bare \
+                      --file=Fedora-Atomic-27-20180419.0.x86_64.qcow2\
+                      --property os_distro='fedora-atomic' \
+                      fedora-atomic-latest
+```
+### Template Docker Swarm cluster
+```
+openstack coe cluster template create swarm-cluster-template \
+                     --image fedora-atomic-latest \
+                     --external-network public \
+                     --dns-nameserver 8.8.8.8 \
+                     --master-flavor m1.small \
+                     --flavor m1.small \
+                     --coe swarm
 
+### create Docker Swarm cluster
+openstack coe cluster create swarm-cluster \
+                        --cluster-template swarm-cluster-template \
+                        --master-count 1 \
+                        --node-count 1 \
+                        --keypair mykey
+                        
+openstack coe cluster list
+openstack coe cluster show swarm-cluster
+```
+### Template k8s cluster
+```
+openstack coe cluster template create kubernetes-cluster-template \
+                     --image fedora-atomic-latest \
+                     --external-network public \
+                     --dns-nameserver 8.8.8.8 \
+                     --master-flavor m1.small \
+                     --flavor m1.small \
+                     --coe kubernetes
+###  create k8s cluster
+openstack coe cluster create kubernetes-cluster \
+                        --cluster-template kubernetes-cluster-template \
+                        --master-count 1 \
+                        --node-count 1 \
+                        --keypair mykey
+                        
+openstack coe cluster list
+openstack coe cluster show kubernetes-cluster
+=> Add the credentials of the above cluster to your environment:
+$ mkdir -p ~/clusters/kubernetes-cluster
+$ $(openstack coe cluster config kubernetes-cluster --dir ~/clusters/kubernetes-cluster)
+==> The above command will save the authentication artifacts in the directory ~/clusters/kubernetes-cluster and it will export the KUBECONFIG environment variable:
+export KUBECONFIG=/home/user/clusters/kubernetes-cluster/config
+```
 
-
-
+link tham khảo: https://docs.openstack.org/magnum/ussuri/install/launch-instance.html#upload-the-images-required-for-your-clusters-to-the-image-service
 
 
 
