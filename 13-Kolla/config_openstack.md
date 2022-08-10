@@ -1,5 +1,78 @@
 # Cấu hình openstack trong kolla
+```
+network:
+  ethernets:
+    ens192:
+      addresses:
+      - 172.10.10.150/24
+    ens160:
+      dhcp4: no
+  bridges:
+    br-ex:
+      addresses:
+      - 10.2.65.150/24
+      gateway4: 10.2.65.1
+      nameservers:
+        addresses:
+        - 8.8.8.8
+      interfaces:
+        - ens160
+  version: 2
+
+```
 File cấu hình các service trong kolla là `/etc/kolla/globals.yaml`
+
+```
+workaround_ansible_issue_8743: yes
+kolla_base_distro: "ubuntu"
+kolla_internal_vip_address: "172.10.10.135"
+network_interface: "ens192"
+neutron_external_interface: "ens160"
+neutron_plugin_agent: "openvswitch"
+keepalived_virtual_router_id: "77"
+kolla_enable_tls_external: "{{ kolla_enable_tls_internal if kolla_same_external_internal_vip | bool else 'no' }}"
+enable_openstack_core: "yes"
+enable_haproxy: "yes"
+enable_keepalived: "{{ enable_haproxy | bool }}"
+enable_keystone: "{{ enable_openstack_core | bool }}"
+enable_mariadb: "yes"
+enable_memcached: "yes"
+enable_neutron: "{{ enable_openstack_core | bool }}"
+enable_nova: "{{ enable_openstack_core | bool }}"
+enable_rabbitmq: "{{ 'yes' if om_rpc_transport == 'rabbit' or om_notify_transport == 'rabbit' else 'no' }}"
+enable_cinder: "yes"
+enable_cinder_backup: "no"
+enable_cinder_backend_lvm: "yes"
+enable_fluentd: "yes"
+enable_heat: "{{ enable_openstack_core | bool }}"
+enable_horizon: "{{ enable_openstack_core | bool }}"
+enable_horizon_heat: "{{ enable_heat | bool }}"
+enable_horizon_magnum: "{{ enable_magnum | bool }}"
+enable_magnum: "yes"
+enable_neutron_provider_networks: "yes"
+enable_nova_ssh: "yes"
+cinder_volume_group: "cinder-volumes"
+nova_compute_virt_type: "qemu"
+
+```
+
+Cấu hình multinode
+```
+[control]
+server-01 ansible_user=root ansible_password=1 ansible_become=true
+[network]
+server-01 ansible_user=root ansible_password=1 ansible_become=true
+[compute]
+server-02 ansible_user=root ansible_password=1 ansible_become=true
+server-03 ansible_user=root ansible_password=1 ansible_become=true
+[monitoring]
+server-01 ansible_user=root ansible_password=1 ansible_become=true
+[storage]
+server-02
+
+
+```
+
 
 Dựa vào file cấu hình này mà ansible sẽ tạo ra file config đối với các service.
 
