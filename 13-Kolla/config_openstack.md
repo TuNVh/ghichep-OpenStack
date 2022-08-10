@@ -172,9 +172,9 @@ $ $(openstack coe cluster config kubernetes-cluster --dir ~/clusters/kubernetes-
 export KUBECONFIG=/home/user/clusters/kubernetes-cluster/config
 ```
 
-link tham khảo: https://docs.openstack.org/magnum/ussuri/install/launch-instance.html#upload-the-images-required-for-your-clusters-to-the-image-service
-
-
+link tham khảo: 
+- https://docs.openstack.org/magnum/ussuri/install/launch-instance.html#upload-the-images-required-for-your-clusters-to-the-image-service
+- https://computingforgeeks.com/install-fedora-coreos-fcos-on-kvm-openstack/
 
 
 
