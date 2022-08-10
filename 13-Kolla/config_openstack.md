@@ -162,7 +162,8 @@ openstack coe cluster create kubernetes-cluster \
                         --master-count 1 \
                         --node-count 1 \
                         --keypair mykey
-                        
+                     
+pip3 install python-magnumclient                         
 openstack coe cluster list
 openstack coe cluster show kubernetes-cluster
 => Add the credentials of the above cluster to your environment:
