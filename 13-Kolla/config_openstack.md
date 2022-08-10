@@ -72,6 +72,60 @@ server-02
 
 
 ```
+## install environment
+```
+sudo apt update
+sudo apt install python3-dev libffi-dev gcc libssl-dev
+sudo apt install python3-venv
+python3 -m venv /path/to/venv
+source /path/to/venv/bin/activate
+pip install -U pip
+pip install 'ansible>=4,<6'
+
+sudo apt install ansible
+pip install git+https://opendev.org/openstack/kolla-ansible@master
+
+sudo mkdir -p /etc/kolla
+sudo chown $USER:$USER /etc/kolla
+
+cp -r /path/to/venv/share/kolla-ansible/etc_examples/kolla/* /etc/kolla
+cp /path/to/venv/share/kolla-ansible/ansible/inventory/* .
+
+kolla-ansible install-deps
+
+cấu hình trong /etc/ansible/ansible.cfg:
+[defaults]
+host_key_checking=False
+pipelining=True
+forks=100
+
+ansible -i multinode all -m ping
+kolla-genpwd
+
+
+kolla-ansible -i ./multinode bootstrap-servers
+kolla-ansible -i ./multinode prechecks
+kolla-ansible -i ./multinode deploy
+
+cấu hình CLI
+pip install python-openstackclient -c https://releases.openstack.org/constraints/upper/master
+
+/path/to/venv/share/kolla-ansible/init-runonce
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 Dựa vào file cấu hình này mà ansible sẽ tạo ra file config đối với các service.
