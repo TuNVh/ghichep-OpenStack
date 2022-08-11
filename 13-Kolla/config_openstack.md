@@ -20,6 +20,16 @@ network:
   version: 2
 
 ```
+Cấu hình cinder
+```
+pvcreate /dev/sdb
+vgcreate cinder-volumes /dev/sdb
+
+## edit /etc/lvm.conf
+devices {
+...
+filter = [ "a/sdb/", "r/.*/"]
+```
 File cấu hình các service trong kolla là `/etc/kolla/globals.yaml`
 
 ```
