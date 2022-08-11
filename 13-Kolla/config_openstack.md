@@ -119,7 +119,7 @@ kolla-ansible -i ./multinode deploy
 
 cấu hình CLI
 pip install python-openstackclient -c https://releases.openstack.org/constraints/upper/master
-
+kolla-ansible post-deploy
 /path/to/venv/share/kolla-ansible/init-runonce
 
 ```
