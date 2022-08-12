@@ -186,3 +186,4 @@ export KUBECONFIG=/home/user/clusters/kubernetes-cluster/config
 link tham khảo: 
 - https://docs.openstack.org/magnum/ussuri/install/launch-instance.html#upload-the-images-required-for-your-clusters-to-the-image-service
 - https://computingforgeeks.com/install-fedora-coreos-fcos-on-kvm-openstack/
+- https://docs.openstack.org/kolla-ansible/latest/user/operating-kolla.html
