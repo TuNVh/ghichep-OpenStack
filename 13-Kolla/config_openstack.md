@@ -6,19 +6,18 @@ network:
       addresses:
       - 172.10.10.150/24
     ens160:
-      dhcp4: no
-  bridges:
-    br-ex:
       addresses:
       - 10.2.65.150/24
       gateway4: 10.2.65.1
       nameservers:
         addresses:
         - 8.8.8.8
-      interfaces:
-        - ens160
   version: 2
-
+```
+## add route
+```
+ip route add 10.2.65.1 via br-ex
+ip route add default via 10.2.65.1
 ```
 Cấu hình cinder
 ```
