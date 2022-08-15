@@ -16,6 +16,9 @@ network:
 ```
 ## add route
 ```
+ip route del 0.0.0.0/24
+ip route del default via 10.2.65.1
+
 ip route add 10.2.65.1 via br-ex
 ip route add default via 10.2.65.1
 ```
