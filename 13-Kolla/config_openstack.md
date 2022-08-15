@@ -17,8 +17,8 @@ network:
 ## add route
 ```
 ifconfig ens160 down
-ip addr add 10.2.65.151/24 dev br-external
-ip route add 0.0.0.0/24 via 10.2.65.1
+ip addr add 10.2.65.151/24 dev br-ex
+ip route add 0.0.0.0/0 via 10.2.65.1
 ```
 Cấu hình cinder
 ```
