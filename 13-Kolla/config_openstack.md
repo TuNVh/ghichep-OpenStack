@@ -16,7 +16,7 @@ network:
 ```
 ## add route
 ```
-ifconfig ens160 down
+ifconfig ens160 0
 ip addr add 10.2.65.151/24 dev br-ex
 ip route add 0.0.0.0/0 via 10.2.65.1
 ```
